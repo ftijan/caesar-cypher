@@ -6,7 +6,7 @@ namespace CaesarCypher
 {
     public class CaesarCypher
     {
-        private static char[] BaseAlphabet = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+        private static char[] BaseAlphabet = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
         public string DecryptWithOffset(string cypher, int offset)
         {
@@ -49,7 +49,46 @@ namespace CaesarCypher
 
         private static char GetShiftedCharacter(char[] alphabet, int offset, int currentPosition)
         {
-            throw new NotImplementedException();
+            var adjustedOffset = GetAdjustedOffset(alphabet.Length, offset);
+
+            if (adjustedOffset < 0)
+            {                
+                throw new NotImplementedException();
+            }
+            else if (adjustedOffset > 0)
+            {
+                throw new NotImplementedException();
+            }
+            else
+            {
+                return alphabet[currentPosition];
+            }           
+        }
+
+        /// <summary>
+        /// Adjusts the initial offset value in case it is a multiple of alphabet length value.
+        /// </summary>
+        /// <remarks>
+        /// Probably a better way to do it with DIV and MOD operations, but this handles 
+        /// off-by-one errors more obviously and is debugger-friendly.
+        /// </remarks>
+        /// <param name="alphabetLength">The alphabet length.</param>
+        /// <param name="offset">The offset value.</param>
+        /// <returns>The adjusted offset value.</returns>
+        private static int GetAdjustedOffset(int alphabetLength, int offset)
+        {
+            var adjustedOffset = offset;
+            while (adjustedOffset < 0 && adjustedOffset < -alphabetLength)
+            {
+                adjustedOffset += alphabetLength;
+            }
+
+            while (adjustedOffset > 0 && adjustedOffset >= alphabetLength)
+            {
+                adjustedOffset -= alphabetLength;
+            }
+
+            return adjustedOffset;
         }
     }
 }
