@@ -66,8 +66,8 @@ namespace CaesarCypher
             var offsetDictionaryMap = new Dictionary<char, char>();
 
             for (int i = 0; i < alphabet.Length; i++)
-            {
-                offsetDictionaryMap.Add(alphabet[i], GetShiftedCharacter(alphabet, offset, i));
+            {                
+                offsetDictionaryMap.Add(GetShiftedCharacter(alphabet, offset, i), alphabet[i]);
             }
 
             return offsetDictionaryMap;
@@ -100,8 +100,10 @@ namespace CaesarCypher
             else if (offset > 0)
             {
                 if (currentPosition + offset > alphabet.Length - 1)
-                {                    
-                    return alphabet[offset - 1];
+                {
+                    var leftShift = currentPosition + offset;
+                    var index = leftShift - alphabet.Length;
+                    return alphabet[index];
                 }                
 
                 return alphabet[currentPosition + offset];
